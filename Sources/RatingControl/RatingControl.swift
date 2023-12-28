@@ -8,7 +8,7 @@
 import SwiftUI
 
 @available(iOS 13, macOS 10.15, macCatalyst 13, tvOS 13.0, watchOS 6, visionOS 1, *)
-public struct RatingControl<Empty: View, Selected: View>: View {
+public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     @Environment(\.layoutDirection)
     private var layoutDirection
     
@@ -18,16 +18,16 @@ public struct RatingControl<Empty: View, Selected: View>: View {
     
     @Binding private var rating: Int
     @ViewBuilder
-    private var emptyLabel: () -> Empty
+    private var emptyLabel: () -> EmptyIcon
     @ViewBuilder
-    private var selectedLabel: () -> Selected
+    private var selectedLabel: () -> FilledIcon
     
     public init(
         _ rating: Binding<Int>,
         axis: Axis = .horizontal,
         maximumRating: Int = 5,
-        @ViewBuilder emptyLabel: @escaping () -> Empty,
-        @ViewBuilder selectedLabel: @escaping () -> Selected
+        @ViewBuilder emptyLabel: @escaping () -> EmptyIcon,
+        @ViewBuilder selectedLabel: @escaping () -> FilledIcon
     ) {
         self.axis = axis
         // Ensure it's not set to anything less than 1
@@ -155,7 +155,7 @@ public struct RatingControl<Empty: View, Selected: View>: View {
     }
 }
 
-extension RatingControl where Empty == Image, Selected == Image {
+extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
     @available(iOS 15, macOS 12, macCatalyst 15, tvOS 15, watchOS 8, visionOS 1, *)
     init(
         _ rating: Binding<Int>,

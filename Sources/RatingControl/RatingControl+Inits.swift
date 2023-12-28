@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-extension RatingControl where Empty == Image, Selected == Image {
+extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
     @available(iOS 13, macOS 11, macCatalyst 13, tvOS 13.0, watchOS 6, visionOS 1, *)
     init(
         _ rating: Binding<Int>,
