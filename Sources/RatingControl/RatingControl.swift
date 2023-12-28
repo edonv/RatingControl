@@ -157,6 +157,25 @@ public struct RatingControl<Empty: View, Selected: View>: View {
     }
 }
 
+extension RatingControl where Empty == Image, Selected == Image {
+    @available(iOS 15, macOS 12, macCatalyst 15, tvOS 15, watchOS 8, visionOS 1, *)
+    init(
+        _ rating: Binding<Int>,
+        axis: Axis = .horizontal,
+        maximumRating: Int = 5,
+        systemImageName: String,
+        selectedSymbolVariants: SymbolVariants
+    ) {
+        self.init(rating, axis: axis, maximumRating: maximumRating) {
+            Image(systemName: systemImageName)
+        } selectedLabel: {
+            Image(systemName: systemImageName)
+        }
+        
+        self.selectedSymbolVariants = .init(variant: selectedSymbolVariants)
+    }
+}
+
 @available(iOS 15, macOS 12, macCatalyst 15, tvOS 15, watchOS 8, visionOS 1, *)
 private struct RatingViewPreview: View {
     @State private var rating: Int = 0
