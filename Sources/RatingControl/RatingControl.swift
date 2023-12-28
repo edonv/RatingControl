@@ -14,7 +14,7 @@ public struct RatingControl<Empty: View, Selected: View>: View {
     
     private let axis: Axis
     private let maximumRating: Int
-    private var selectedSymbolVariants: BackportSymbolVariants
+    private var selectedSymbolVariants: BackportSymbolVariants = .none
     
     @Binding private var rating: Int
     @ViewBuilder
@@ -41,7 +41,6 @@ public struct RatingControl<Empty: View, Selected: View>: View {
         
         self.emptyLabel = emptyLabel
         self.selectedLabel = selectedLabel
-        self.selectedSymbolVariants = .none
     }
     
     public var body: some View {
