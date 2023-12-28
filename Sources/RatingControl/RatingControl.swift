@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+/// A control for setting a "rating".
+///
+/// Anything can be used for empty and filled images (they can be any type of view, not just `Image`s).
 @available(iOS 13, macOS 10.15, macCatalyst 13, tvOS 13.0, watchOS 6, visionOS 1, *)
 public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     @Environment(\.layoutDirection)
@@ -22,6 +25,13 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     @ViewBuilder
     private var filledIcon: () -> FilledIcon
     
+    /// Creates a `RatingControl`.
+    /// - Parameters:
+    ///   - rating: The binding to a value you provide.
+    ///   - axis: The axis on which to lay out the control.
+    ///   - maximumRating: The maximum possible value. This is how many icons will be laid out.
+    ///   - emptyIcon: A view used for every number increment past the current `rating` value, used to show the possible range of values.
+    ///   - filledIcon: A view used for every number increment up to the current `rating` value, used to show the current value.
     public init(
         _ rating: Binding<Int>,
         axis: Axis = .horizontal,
@@ -187,6 +197,15 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
 }
 
 extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
+    /// Creates a `RatingControl` with a system symbol image as the base icon, while applying the provided [`SymbolVariants`](https://developer.apple.com/documentation/swiftui/symbolvariants) when an icon is filled.
+    ///
+    /// This initializer is only available on OS's that supports `SymbolVariants`. To get this same effect on older OS's, use a different initializer manually including the variant(s) in the system image name for the filled icon.
+    /// - Parameters:
+    ///   - rating: The binding to a value you provide.
+    ///   - axis: The axis on which to lay out the control.
+    ///   - maximumRating: The maximum possible value. This is how many icons will be laid out.
+    ///   - systemImageName: The name of the system symbol image to use for every number increment past the current `rating` value, used to show the possible range of values. It's also used as the for the filled icon, but with `filledSymbolVariant` applied to it.
+    ///   - filledSymbolVariant: The variant to use for the filled icon. The filled icon is used for every number increment up to the current `rating` value, used to show the current value.
     @available(iOS 15, macOS 12, macCatalyst 15, tvOS 15, watchOS 8, visionOS 1, *)
     init(
         _ rating: Binding<Int>,
