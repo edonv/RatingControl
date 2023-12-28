@@ -14,7 +14,7 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     
     private let axis: Axis
     private let maximumRating: Int
-    private var selectedSymbolVariants: BackportSymbolVariants = .none
+    private var selectedSymbolVariant: BackportSymbolVariants = .none
     
     @Binding private var rating: Int
     @ViewBuilder
@@ -157,7 +157,7 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     private var finalFilledIcon: some View {
         if #available(iOS 15.0, macOS 12.0, macCatalyst 15.0, tvOS 15.0, watchOS 8.0, *) {
             filledIcon()
-                .symbolVariant(selectedSymbolVariants.symbolVariants)
+                .symbolVariant(selectedSymbolVariant.symbolVariants)
         } else {
             filledIcon()
         }
@@ -193,7 +193,7 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
         axis: Axis = .horizontal,
         maximumRating: Int = 5,
         systemImageName: String,
-        selectedSymbolVariants: SymbolVariants
+        selectedSymbolVariant: SymbolVariants
     ) {
         self.init(rating, axis: axis, maximumRating: maximumRating) {
             Image(systemName: systemImageName)
@@ -201,7 +201,7 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
             Image(systemName: systemImageName)
         }
         
-        self.selectedSymbolVariants = .init(variant: selectedSymbolVariants)
+        self.selectedSymbolVariant = .init(variant: selectedSymbolVariant)
     }
 }
 
@@ -210,7 +210,7 @@ private struct RatingViewPreview: View {
     @State private var rating: Int = 0
     
     var body: some View {
-        RatingControl($rating, systemImageName: "star", selectedSymbolVariants: .fill)
+        RatingControl($rating, systemImageName: "star", selectedSymbolVariant: .fill)
 //            .iconSpacing(0)
         //    RatingView(rating: .constant(3), maximumRating: 5, stackSpacing: nil) {
         //        Image(systemName: "star")
