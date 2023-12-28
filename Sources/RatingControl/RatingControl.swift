@@ -14,7 +14,7 @@ public struct RatingControl<Empty: View, Selected: View>: View {
     
     private let axis: Axis
     private let maximumRating: Int
-    private var stackSpacing: CGFloat? = nil
+    private var labelSpacing: CGFloat? = nil
     
     private var selectedSymbolVariants: BackportSymbolVariants
     
@@ -118,11 +118,11 @@ public struct RatingControl<Empty: View, Selected: View>: View {
     private func stack(@ViewBuilder content: () -> some View) -> some View {
         switch axis {
         case .horizontal:
-            HStack(spacing: stackSpacing) {
+            HStack(spacing: labelSpacing) {
                 content()
             }
         case .vertical:
-            VStack(spacing: stackSpacing) {
+            VStack(spacing: labelSpacing) {
                 content()
             }
         }
@@ -152,7 +152,7 @@ public struct RatingControl<Empty: View, Selected: View>: View {
     
     public func labelSpacing(_ spacing: CGFloat?) -> Self {
         var new = self
-        new.stackSpacing = spacing
+        new.labelSpacing = spacing
         return new
     }
 }
