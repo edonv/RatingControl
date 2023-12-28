@@ -18,16 +18,16 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     
     @Binding private var rating: Int
     @ViewBuilder
-    private var emptyLabel: () -> EmptyIcon
+    private var emptyIcon: () -> EmptyIcon
     @ViewBuilder
-    private var selectedLabel: () -> FilledIcon
+    private var filledIcon: () -> FilledIcon
     
     public init(
         _ rating: Binding<Int>,
         axis: Axis = .horizontal,
         maximumRating: Int = 5,
-        @ViewBuilder emptyLabel: @escaping () -> EmptyIcon,
-        @ViewBuilder selectedLabel: @escaping () -> FilledIcon
+        @ViewBuilder emptyIcon: @escaping () -> EmptyIcon,
+        @ViewBuilder filledIcon: @escaping () -> FilledIcon
     ) {
         self.axis = axis
         // Ensure it's not set to anything less than 1
@@ -39,8 +39,8 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
             rating.wrappedValue = min(max(newValue, 0), maximumRating)
         }
         
-        self.emptyLabel = emptyLabel
-        self.selectedLabel = selectedLabel
+        self.emptyIcon = emptyIcon
+        self.filledIcon = filledIcon
     }
     
     public var body: some View {
@@ -129,37 +129,37 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     private func label(for number: Int) -> some View {
         switch controlSizingMode {
         case .useEmptyIconSize:
-            emptyLabel()
+            emptyIcon()
                 .opacity(number > rating ? 1 : 0)
                 .overlayBackport {
-                    finalSelectedLabel
+                    finalFilledIcon
                         .opacity(number > rating ? 0 : 1)
                 }
             
         case .useFilledIconSize:
-            finalSelectedLabel
+            finalFilledIcon
                 .opacity(number > rating ? 0 : 1)
                 .overlayBackport {
-                    emptyLabel()
+                    emptyIcon()
                         .opacity(number > rating ? 1 : 0)
                 }
             
         case .dynamic:
             if number > rating {
-                emptyLabel()
+                emptyIcon()
             } else {
-                finalSelectedLabel
+                finalFilledIcon
             }
         }
     }
     
     @ViewBuilder
-    private var finalSelectedLabel: some View {
+    private var finalFilledIcon: some View {
         if #available(iOS 15.0, macOS 12.0, macCatalyst 15.0, tvOS 15.0, watchOS 8.0, *) {
-            selectedLabel()
+            filledIcon()
                 .symbolVariant(selectedSymbolVariants.symbolVariants)
         } else {
-            selectedLabel()
+            filledIcon()
         }
     }
     
@@ -197,7 +197,7 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
     ) {
         self.init(rating, axis: axis, maximumRating: maximumRating) {
             Image(systemName: systemImageName)
-        } selectedLabel: {
+        } filledIcon: {
             Image(systemName: systemImageName)
         }
         
@@ -214,7 +214,7 @@ private struct RatingViewPreview: View {
 //            .iconSpacing(0)
         //    RatingView(rating: .constant(3), maximumRating: 5, stackSpacing: nil) {
         //        Image(systemName: "star")
-        //    } selectedLabel: {
+        //    } filledIcon: {
         //        Image(systemName: "star")
         //            .symbolVariant(.fill)
         //    }

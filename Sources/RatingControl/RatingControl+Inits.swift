@@ -18,7 +18,7 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
     ) {
         self.init(rating, axis: axis, maximumRating: maximumRating) {
             Image(systemName: emptySystemImageName)
-        } selectedLabel: {
+        } filledIcon: {
             Image(systemName: selectedSystemImageName)
         }
     }
@@ -33,7 +33,7 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
     ) {
         self.init(rating, axis: axis, maximumRating: maximumRating) {
             Image(emptyImageName)
-        } selectedLabel: {
+        } filledIcon: {
             Image(selectedImageName)
         }
     }
@@ -48,7 +48,7 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
     ) {
         self.init(rating, axis: axis, maximumRating: maximumRating) {
             Image(emptyImageName)
-        } selectedLabel: {
+        } filledIcon: {
             Image(systemName: selectedSystemImageName)
         }
     }
@@ -63,7 +63,7 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
     ) {
         self.init(rating, axis: axis, maximumRating: maximumRating) {
             Image(systemName: emptySystemImageName)
-        } selectedLabel: {
+        } filledIcon: {
             Image(selectedImageName)
         }
     }
