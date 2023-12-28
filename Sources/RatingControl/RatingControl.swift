@@ -127,12 +127,30 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     
     @ViewBuilder
     private func label(for number: Int) -> some View {
-        emptyLabel()
-            .opacity(number > rating ? 1 : 0)
-            .overlayBackport {
+        switch controlSizingMode {
+        case .useEmptyIconSize:
+            emptyLabel()
+                .opacity(number > rating ? 1 : 0)
+                .overlayBackport {
+                    finalSelectedLabel
+                        .opacity(number > rating ? 0 : 1)
+                }
+            
+        case .useFilledIconSize:
+            finalSelectedLabel
+                .opacity(number > rating ? 0 : 1)
+                .overlayBackport {
+                    emptyLabel()
+                        .opacity(number > rating ? 1 : 0)
+                }
+            
+        case .dynamic:
+            if number > rating {
+                emptyLabel()
+            } else {
                 finalSelectedLabel
-                    .opacity(number > rating ? 0 : 1)
             }
+        }
     }
     
     @ViewBuilder
@@ -151,6 +169,13 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     public func labelSpacing(_ spacing: CGFloat?) -> Self {
         var new = self
         new.labelSpacing = spacing
+        return new
+    }
+    
+    private var controlSizingMode: ControlSizingMode = .useEmptyIconSize
+    public func controlSizingMode(_ mode: ControlSizingMode) -> Self {
+        var new = self
+        new.controlSizingMode = mode
         return new
     }
 }
