@@ -14,8 +14,6 @@ public struct RatingControl<Empty: View, Selected: View>: View {
     
     private let axis: Axis
     private let maximumRating: Int
-    private var labelSpacing: CGFloat? = nil
-    
     private var selectedSymbolVariants: BackportSymbolVariants
     
     @Binding private var rating: Int
@@ -150,6 +148,7 @@ public struct RatingControl<Empty: View, Selected: View>: View {
     
     // MARK: Modifiers
     
+    private var labelSpacing: CGFloat? = nil
     public func labelSpacing(_ spacing: CGFloat?) -> Self {
         var new = self
         new.labelSpacing = spacing
