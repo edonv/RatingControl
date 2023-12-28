@@ -166,6 +166,9 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     // MARK: Modifiers
     
     private var iconSpacing: CGFloat? = nil
+    /// This sets the spacing between between icons in the control.
+    ///
+    /// The default value is `nil`, which uses the system's default spacing.
     public func iconSpacing(_ spacing: CGFloat?) -> Self {
         var new = self
         new.iconSpacing = spacing
@@ -173,6 +176,9 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     }
     
     private var controlSizingMode: ControlSizingMode = .useEmptyIconSize
+    /// This sets the mode used when laying out each icon in the control.
+    ///
+    /// The default value is ``useEmptyIconSize``.
     public func controlSizingMode(_ mode: ControlSizingMode) -> Self {
         var new = self
         new.controlSizingMode = mode
