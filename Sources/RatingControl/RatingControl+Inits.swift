@@ -14,12 +14,12 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
         axis: Axis = .horizontal,
         maximumRating: Int = 5,
         emptySystemImageName: String,
-        selectedSystemImageName: String
+        filledSystemImageName: String
     ) {
         self.init(rating, axis: axis, maximumRating: maximumRating) {
             Image(systemName: emptySystemImageName)
         } filledIcon: {
-            Image(systemName: selectedSystemImageName)
+            Image(systemName: filledSystemImageName)
         }
     }
     
@@ -29,12 +29,12 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
         axis: Axis = .horizontal,
         maximumRating: Int = 5,
         emptyImageName: String,
-        selectedImageName: String
+        filledImageName: String
     ) {
         self.init(rating, axis: axis, maximumRating: maximumRating) {
             Image(emptyImageName)
         } filledIcon: {
-            Image(selectedImageName)
+            Image(filledImageName)
         }
     }
     
@@ -44,12 +44,12 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
         axis: Axis = .horizontal,
         maximumRating: Int = 5,
         emptyImageName: String,
-        selectedSystemImageName: String
+        filledSystemImageName: String
     ) {
         self.init(rating, axis: axis, maximumRating: maximumRating) {
             Image(emptyImageName)
         } filledIcon: {
-            Image(systemName: selectedSystemImageName)
+            Image(systemName: filledSystemImageName)
         }
     }
     
@@ -59,12 +59,12 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
         axis: Axis = .horizontal,
         maximumRating: Int = 5,
         emptySystemImageName: String,
-        selectedImageName: String
+        filledImageName: String
     ) {
         self.init(rating, axis: axis, maximumRating: maximumRating) {
             Image(systemName: emptySystemImageName)
         } filledIcon: {
-            Image(selectedImageName)
+            Image(filledImageName)
         }
     }
 }
