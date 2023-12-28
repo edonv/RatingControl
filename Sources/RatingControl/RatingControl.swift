@@ -115,11 +115,11 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     private func stack(@ViewBuilder content: () -> some View) -> some View {
         switch axis {
         case .horizontal:
-            HStack(spacing: labelSpacing) {
+            HStack(spacing: iconSpacing) {
                 content()
             }
         case .vertical:
-            VStack(spacing: labelSpacing) {
+            VStack(spacing: iconSpacing) {
                 content()
             }
         }
@@ -165,10 +165,10 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     
     // MARK: Modifiers
     
-    private var labelSpacing: CGFloat? = nil
-    public func labelSpacing(_ spacing: CGFloat?) -> Self {
+    private var iconSpacing: CGFloat? = nil
+    public func iconSpacing(_ spacing: CGFloat?) -> Self {
         var new = self
-        new.labelSpacing = spacing
+        new.iconSpacing = spacing
         return new
     }
     
@@ -205,7 +205,7 @@ private struct RatingViewPreview: View {
     
     var body: some View {
         RatingControl($rating, systemImageName: "star", selectedSymbolVariants: .fill)
-//            .labelSpacing(0)
+//            .iconSpacing(0)
         //    RatingView(rating: .constant(3), maximumRating: 5, stackSpacing: nil) {
         //        Image(systemName: "star")
         //    } selectedLabel: {
