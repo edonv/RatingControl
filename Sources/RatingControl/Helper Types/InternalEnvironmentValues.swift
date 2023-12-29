@@ -126,3 +126,33 @@ extension View {
         self.environment(\.ratingControlFilledIconStyle, AnyShapeStyleBackport.color(color))
     }
 }
+
+// MARK: BothIconStyles
+
+extension View {
+    /// Sets all icons in a ``RatingControl/RatingControl`` to use a given style.
+    ///
+    /// The default value is [`primary`](https://developer.apple.com/documentation/swiftui/hierarchicalshapestyle/primary).
+    @available(iOS 15.0, macOS 12.0, macCatalyst 15.0, tvOS 15, watchOS 8.0, visionOS 1.0, *)
+    @ViewBuilder
+    public func ratingControlIconStyle<S: ShapeStyle>(_ style: S) -> some View {
+        self
+            .environment(\.ratingControlEmptyIconStyle, AnyShapeStyleBackport.shapeStyle(style))
+            .environment(\.ratingControlFilledIconStyle, AnyShapeStyleBackport.shapeStyle(style))
+    }
+    
+    /// Sets all icons in a ``RatingControl/RatingControl`` to use a given color.
+    ///
+    /// The default value is [`HierarchicalShapeStyle.primary`](https://developer.apple.com/documentation/swiftui/hierarchicalshapestyle/primary), if available (iOS 15+, etc.). Otherwise, it's [`Color.primary`](https://developer.apple.com/documentation/swiftui/color/primary).
+    @available(iOS, introduced: 13.0, deprecated: 17.0, renamed: "ratingControlEmptyIconStyle(_:)")
+    @available(macOS, introduced: 10.15, deprecated: 14.0, renamed: "ratingControlEmptyIconStyle(_:)")
+    @available(tvOS, introduced: 13.0, deprecated: 17.0, renamed: "ratingControlEmptyIconStyle(_:)")
+    @available(watchOS, introduced: 6.0, deprecated: 10.0, renamed: "ratingControlEmptyIconStyle(_:)")
+    @available(visionOS, introduced: 1.0, deprecated: 1.0, renamed: "ratingControlEmptyIconStyle(_:)")
+    @ViewBuilder
+    public func ratingControlIconColor(_ color: Color) -> some View {
+        self
+            .environment(\.ratingControlEmptyIconStyle, AnyShapeStyleBackport.color(color))
+            .environment(\.ratingControlFilledIconStyle, AnyShapeStyleBackport.color(color))
+    }
+}
