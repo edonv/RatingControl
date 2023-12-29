@@ -28,9 +28,13 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     @Environment(\.ratingControlFilledIconColor)
     private var filledIconColor
     
+    // MARK: Init Properties
+    
     private let axis: Axis
     private let maximumRating: Int
     private var filledSymbolVariant: BackportSymbolVariants = .none
+    
+    // MARK: Binding/ViewBuilder Properties
     
     @Binding private var rating: Int
     @ViewBuilder
