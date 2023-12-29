@@ -92,6 +92,7 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
                 } label: {
                     label(for: n)
                 }
+                .buttonStyle(.plain)
                 #endif
             }
         }
