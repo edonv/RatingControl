@@ -158,31 +158,31 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
         switch iconFrameSizingMode {
         case .useEmptyIconSize:
             emptyIcon()
-                .foregroundColor(emptyIconColor)
+                .foregroundStyleBackport(emptyIconColor)
                 .opacity(number > rating ? 1 : 0)
                 .overlayBackport {
                     finalFilledIcon
-                        .foregroundColor(filledIconColor)
+                        .foregroundStyleBackport(filledIconColor)
                         .opacity(number > rating ? 0 : 1)
                 }
             
         case .useFilledIconSize:
             finalFilledIcon
-                .foregroundColor(filledIconColor)
+                .foregroundStyleBackport(filledIconColor)
                 .opacity(number > rating ? 0 : 1)
                 .overlayBackport {
                     emptyIcon()
-                        .foregroundColor(emptyIconColor)
+                        .foregroundStyleBackport(emptyIconColor)
                         .opacity(number > rating ? 1 : 0)
                 }
             
         case .dynamic:
             if number > rating {
                 emptyIcon()
-                    .foregroundColor(emptyIconColor)
+                    .foregroundStyleBackport(emptyIconColor)
             } else {
                 finalFilledIcon
-                    .foregroundColor(filledIconColor)
+                    .foregroundStyleBackport(filledIconColor)
             }
         }
     }
