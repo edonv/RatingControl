@@ -31,12 +31,12 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     // MARK: Init Properties
     
     private let axis: Axis
-    private let maximumRating: Int
+    private let maximumRating: Double
     private var filledSymbolVariant: BackportSymbolVariants = .none
     
     // MARK: Binding/ViewBuilder Properties
     
-    @Binding private var rating: Int
+    @Binding private var rating: Double
     @ViewBuilder
     private var emptyIcon: () -> EmptyIcon
     @ViewBuilder
@@ -49,21 +49,21 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     ///   - maximumRating: The maximum possible value. This is how many icons will be laid out.
     ///   - emptyIcon: A view used for every number increment past the current `rating` value, used to show the possible range of values.
     ///   - filledIcon: A view used for every number increment up to the current `rating` value, used to show the current value.
-    public init(
-        _ rating: Binding<Int>,
+    public init<V: BinaryFloatingPoint>(
+        _ rating: Binding<V>,
         axis: Axis = .horizontal,
-        maximumRating: Int = 5,
+        maximumRating: V = 5,
         @ViewBuilder emptyIcon: @escaping () -> EmptyIcon,
         @ViewBuilder filledIcon: @escaping () -> FilledIcon
     ) {
         self.axis = axis
         // Ensure it's not set to anything less than 1
-        self.maximumRating = max(maximumRating, 1)
+        self.maximumRating = max(Double(maximumRating), 1)
         
         self._rating = .init {
-            min(max(rating.wrappedValue, 0), maximumRating)
+            Double(min(max(rating.wrappedValue, 0), maximumRating))
         } set: { newValue in
-            rating.wrappedValue = min(max(newValue, 0), maximumRating)
+            rating.wrappedValue = min(max(V(newValue), 0), V(maximumRating))
         }
         
         self.emptyIcon = emptyIcon
@@ -72,7 +72,8 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     
     public var body: some View {
         stack {
-            ForEach(1...maximumRating, id: \.self) { n in
+            ForEach(1...Int(maximumRating), id: \.self) { int in
+                let n = Double(int)
                 #if !os(tvOS)
                 label(for: n)
                     .onTapGesture {
@@ -130,10 +131,10 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
                 }
                 
                 let clampedPosValue = min(max(positionValue, 0), frameDimension)
-                let newValue = (CGFloat(maximumRating) * clampedPosValue / frameDimension).rounded(.up)
+                let newValue = (CGFloat(maximumRating) * clampedPosValue / frameDimension)/*.rounded(.up)*/
                 
-                if rating != Int(newValue) {
-                    rating = Int(newValue)
+                if rating != Double(newValue) {
+                    rating = Double(newValue)
                 }
             }
     }
@@ -154,7 +155,7 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     }
     
     @ViewBuilder
-    private func label(for number: Int) -> some View {
+    private func label(for number: Double) -> some View {
         switch iconFrameSizingMode {
         case .useEmptyIconSize:
             styledEmptyIcon(for: number)
@@ -178,14 +179,14 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     }
     
     @ViewBuilder
-    private func styledEmptyIcon(for number: Int) -> some View {
+    private func styledEmptyIcon(for number: Double) -> some View {
         emptyIcon()
             .foregroundStyleBackport(emptyIconStyle)
             .opacity(number > rating ? 1 : 0)
     }
     
     @ViewBuilder
-    private func styledFilledIcon(for number: Int) -> some View {
+    private func styledFilledIcon(for number: Double) -> some View {
         filledIconWithVariant
             .foregroundStyleBackport(filledIconStyle)
             .opacity(number > rating ? 0 : 1)
@@ -213,10 +214,10 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
     ///   - systemImageName: The name of the system symbol image to use for every number increment past the current `rating` value, used to show the possible range of values. It's also used as the for the filled icon, but with `filledSymbolVariant` applied to it.
     ///   - filledSymbolVariant: The variant to use for the filled icon. The filled icon is used for every number increment up to the current `rating` value, used to show the current value.
     @available(iOS 15, macOS 12, macCatalyst 15, tvOS 15, watchOS 8, visionOS 1, *)
-    init(
-        _ rating: Binding<Int>,
+    init<V: BinaryFloatingPoint>(
+        _ rating: Binding<V>,
         axis: Axis = .horizontal,
-        maximumRating: Int = 5,
+        maximumRating: V = 5,
         systemImageName: String,
         filledSymbolVariant: SymbolVariants
     ) {
@@ -232,7 +233,7 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
 
 @available(iOS 16, macOS 13, macCatalyst 16, tvOS 16, watchOS 9, visionOS 1, *)
 private struct RatingViewPreview: View {
-    @State private var rating: Int = 0
+    @State private var rating: Double = 0
     
     var body: some View {
         RatingControl($rating, systemImageName: "star", filledSymbolVariant: .fill.circle)
