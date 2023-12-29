@@ -42,3 +42,14 @@ internal enum AnyShapeStyleBackport {
         }
     }
 }
+
+extension View {
+    @ViewBuilder
+    internal func foregroundStyleBackport(_ style: AnyShapeStyleBackport) -> some View {
+        if #available(iOS 15.0, macOS 12.0, macCatalyst 15.0, tvOS 15, watchOS 8.0, visionOS 1.0, *) {
+            self.foregroundStyle(style.asShapeStyle)
+        } else {
+            self.foregroundColor(style.asColor)
+        }
+    }
+}

@@ -39,13 +39,4 @@ extension View {
             action(newValue)
         }
     }
-    
-    @ViewBuilder
-    func foregroundStyleBackport(_ color: Color) -> some View {
-        if #available(iOS 15.0, macOS 12.0, macCatalyst 15.0, tvOS 15, watchOS 8.0, visionOS 1.0, *) {
-            self.foregroundStyle(color)
-        } else {
-            self.foregroundColor(color)
-        }
-    }
 }
