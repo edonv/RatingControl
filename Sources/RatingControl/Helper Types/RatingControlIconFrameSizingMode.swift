@@ -1,6 +1,6 @@
 //
 //  RatingControlIconFrameSizingMode.swift
-//  
+//
 //
 //  Created by Edon Valdman on 12/28/23.
 //
