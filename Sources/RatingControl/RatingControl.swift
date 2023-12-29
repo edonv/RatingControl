@@ -185,13 +185,13 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
         return new
     }
     
-    private var controlSizingMode: ControlSizingMode = .useEmptyIconSize
+    private var iconSizingMode: RatingControlIconFrameSizingMode = .useEmptyIconSize
     /// This sets the mode used when laying out each icon in the control.
     ///
     /// The default value is ``RatingControl/ControlSizingMode/useEmptyIconSize``.
-    public func controlSizingMode(_ mode: ControlSizingMode) -> Self {
+    public func iconSizingMode(_ mode: RatingControlIconFrameSizingMode) -> Self {
         var new = self
-        new.controlSizingMode = mode
+        new.iconSizingMode = mode
         return new
     }
 }
