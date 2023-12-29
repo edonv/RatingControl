@@ -12,8 +12,12 @@ import SwiftUI
 /// Anything can be used for empty and filled images (they can be any type of view, not just `Image`s).
 @available(iOS 13, macOS 10.15, macCatalyst 13, tvOS 13.0, watchOS 6, visionOS 1, *)
 public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
+    // MARK: Environment Values
+    
     @Environment(\.layoutDirection)
     private var layoutDirection
+    
+    // MARK: Custom Environment Values
     
     @Environment(\.ratingControlIconFrameSizingMode)
     private var iconFrameSizingMode
