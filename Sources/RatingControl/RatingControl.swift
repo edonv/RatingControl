@@ -23,10 +23,10 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     private var iconFrameSizingMode
     @Environment(\.ratingControlIconSpacing)
     private var iconSpacing
-    @Environment(\.ratingControlEmptyIconColor)
-    private var emptyIconColor
-    @Environment(\.ratingControlFilledIconColor)
-    private var filledIconColor
+    @Environment(\.ratingControlEmptyIconStyle)
+    private var emptyIconStyle
+    @Environment(\.ratingControlFilledIconStyle)
+    private var filledIconStyle
     
     // MARK: Init Properties
     
@@ -158,31 +158,31 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
         switch iconFrameSizingMode {
         case .useEmptyIconSize:
             emptyIcon()
-                .foregroundStyleBackport(emptyIconColor)
+                .foregroundStyleBackport(emptyIconStyle)
                 .opacity(number > rating ? 1 : 0)
                 .overlayBackport {
                     finalFilledIcon
-                        .foregroundStyleBackport(filledIconColor)
+                        .foregroundStyleBackport(filledIconStyle)
                         .opacity(number > rating ? 0 : 1)
                 }
             
         case .useFilledIconSize:
             finalFilledIcon
-                .foregroundStyleBackport(filledIconColor)
+                .foregroundStyleBackport(filledIconStyle)
                 .opacity(number > rating ? 0 : 1)
                 .overlayBackport {
                     emptyIcon()
-                        .foregroundStyleBackport(emptyIconColor)
+                        .foregroundStyleBackport(emptyIconStyle)
                         .opacity(number > rating ? 1 : 0)
                 }
             
         case .dynamic:
             if number > rating {
                 emptyIcon()
-                    .foregroundStyleBackport(emptyIconColor)
+                    .foregroundStyleBackport(emptyIconStyle)
             } else {
                 finalFilledIcon
-                    .foregroundStyleBackport(filledIconColor)
+                    .foregroundStyleBackport(filledIconStyle)
             }
         }
     }

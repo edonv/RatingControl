@@ -53,49 +53,76 @@ extension View {
     }
 }
 
-// MARK: EmptyIconColor
+// MARK: EmptyIconStyle
 
-private struct RatingControlEmptyIconColorEnvironmentKey: EnvironmentKey {
-    static let defaultValue: Color = .primary
+private struct RatingControlEmptyIconStyleEnvironmentKey: EnvironmentKey {
+    static let defaultValue: AnyShapeStyleBackport = .primary
 }
 
 extension EnvironmentValues {
-    internal var ratingControlEmptyIconColor: Color {
-        get { self[RatingControlEmptyIconColorEnvironmentKey.self] }
-        set { self[RatingControlEmptyIconColorEnvironmentKey.self] = newValue }
+    internal var ratingControlEmptyIconStyle: AnyShapeStyleBackport {
+        get { self[RatingControlEmptyIconStyleEnvironmentKey.self] }
+        set { self[RatingControlEmptyIconStyleEnvironmentKey.self] = newValue }
     }
 }
 
 extension View {
-    /// This sets the foreground color for empty icons in a ``RatingControl/RatingControl``.
+    /// Sets a ``RatingControl/RatingControl``'s empty icons to use a given style.
     ///
-    /// The default value is [`primary`](https://developer.apple.com/documentation/swiftui/color/primary).
+    /// The default value is [`primary`](https://developer.apple.com/documentation/swiftui/hierarchicalshapestyle/primary).
+    @available(iOS 15.0, macOS 12.0, macCatalyst 15.0, tvOS 15, watchOS 8.0, visionOS 1.0, *)
+    @ViewBuilder
+    public func ratingControlEmptyIconStyle<S: ShapeStyle>(_ style: S) -> some View {
+        self.environment(\.ratingControlEmptyIconStyle, AnyShapeStyleBackport.shapeStyle(style))
+    }
+    
+    /// Sets a ``RatingControl/RatingControl``'s empty icons to use a given color.
+    ///
+    /// The default value is [`HierarchicalShapeStyle.primary`](https://developer.apple.com/documentation/swiftui/hierarchicalshapestyle/primary), if available (iOS 15+, etc.). Otherwise, it's [`Color.primary`](https://developer.apple.com/documentation/swiftui/color/primary).
+    @available(iOS, introduced: 13.0, deprecated: 17.0, renamed: "ratingControlEmptyIconStyle(_:)")
+    @available(macOS, introduced: 10.15, deprecated: 14.0, renamed: "ratingControlEmptyIconStyle(_:)")
+    @available(tvOS, introduced: 13.0, deprecated: 17.0, renamed: "ratingControlEmptyIconStyle(_:)")
+    @available(watchOS, introduced: 6.0, deprecated: 10.0, renamed: "ratingControlEmptyIconStyle(_:)")
+    @available(visionOS, introduced: 1.0, deprecated: 1.0, renamed: "ratingControlEmptyIconStyle(_:)")
     @ViewBuilder
     public func ratingControlEmptyIconColor(_ color: Color) -> some View {
-        self.environment(\.ratingControlEmptyIconColor, color)
+        self.environment(\.ratingControlEmptyIconStyle, AnyShapeStyleBackport.color(color))
     }
 }
 
-// MARK: FilledIconColor
+// MARK: FilledIconStyle
 
-private struct RatingControlFilledIconColorEnvironmentKey: EnvironmentKey {
-    static let defaultValue: Color = .primary
+private struct RatingControlFilledIconStyleEnvironmentKey: EnvironmentKey {
+    static let defaultValue: AnyShapeStyleBackport = .primary
 }
 
 extension EnvironmentValues {
-    internal var ratingControlFilledIconColor: Color {
-        get { self[RatingControlFilledIconColorEnvironmentKey.self] }
-        set { self[RatingControlFilledIconColorEnvironmentKey.self] = newValue }
+    internal var ratingControlFilledIconStyle: AnyShapeStyleBackport {
+        get { self[RatingControlFilledIconStyleEnvironmentKey.self] }
+        set { self[RatingControlFilledIconStyleEnvironmentKey.self] = newValue }
     }
 }
 
 extension View {
-    /// This sets the foreground color for filled icons in a ``RatingControl/RatingControl``.
+    /// Sets a ``RatingControl/RatingControl``'s filled icons to use a given style.
     ///
-    /// The default value is [`primary`](https://developer.apple.com/documentation/swiftui/color/primary).
+    /// The default value is [`primary`](https://developer.apple.com/documentation/swiftui/hierarchicalshapestyle/primary).
+    @available(iOS 15.0, macOS 12.0, macCatalyst 15.0, tvOS 15, watchOS 8.0, visionOS 1.0, *)
+    @ViewBuilder
+    public func ratingControlFilledIconStyle<S: ShapeStyle>(_ style: S) -> some View {
+        self.environment(\.ratingControlFilledIconStyle, AnyShapeStyleBackport.shapeStyle(style))
+    }
+    
+    /// Sets a ``RatingControl/RatingControl``'s filled icons to use a given color.
+    ///
+    /// The default value is [`HierarchicalShapeStyle.primary`](https://developer.apple.com/documentation/swiftui/hierarchicalshapestyle/primary), if available (iOS 15+, etc.). Otherwise, it's [`Color.primary`](https://developer.apple.com/documentation/swiftui/color/primary).
+    @available(iOS, introduced: 13.0, deprecated: 17.0, renamed: "ratingControlFilledIconStyle(_:)")
+    @available(macOS, introduced: 10.15, deprecated: 14.0, renamed: "ratingControlFilledIconStyle(_:)")
+    @available(tvOS, introduced: 13.0, deprecated: 17.0, renamed: "ratingControlFilledIconStyle(_:)")
+    @available(watchOS, introduced: 6.0, deprecated: 10.0, renamed: "ratingControlFilledIconStyle(_:)")
+    @available(visionOS, introduced: 1.0, deprecated: 1.0, renamed: "ratingControlFilledIconStyle(_:)")
     @ViewBuilder
     public func ratingControlFilledIconColor(_ color: Color) -> some View {
-        self.environment(\.ratingControlFilledIconColor, color)
+        self.environment(\.ratingControlFilledIconStyle, AnyShapeStyleBackport.color(color))
     }
 }
-
