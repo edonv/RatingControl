@@ -15,6 +15,12 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     @Environment(\.layoutDirection)
     private var layoutDirection
     
+    @Environment(\.ratingControlIconFrameSizingMode)
+    private var controlSizingMode
+    
+    @Environment(\.ratingControlIconSpacing)
+    private var iconSpacing
+    
     private let axis: Axis
     private let maximumRating: Int
     private var filledSymbolVariant: BackportSymbolVariants = .none
@@ -172,28 +178,6 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
             filledIcon()
         }
     }
-    
-    // MARK: Modifiers
-    
-    private var iconSpacing: CGFloat? = nil
-    /// This sets the spacing between between icons in the control.
-    ///
-    /// The default value is `nil`, which uses the system's default spacing.
-    public func iconSpacing(_ spacing: CGFloat?) -> Self {
-        var new = self
-        new.iconSpacing = spacing
-        return new
-    }
-    
-    private var iconSizingMode: RatingControlIconFrameSizingMode = .useEmptyIconSize
-    /// This sets the mode used when laying out each icon in the control.
-    ///
-    /// The default value is ``RatingControl/ControlSizingMode/useEmptyIconSize``.
-    public func iconSizingMode(_ mode: RatingControlIconFrameSizingMode) -> Self {
-        var new = self
-        new.iconSizingMode = mode
-        return new
-    }
 }
 
 extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
@@ -230,7 +214,7 @@ private struct RatingViewPreview: View {
     
     var body: some View {
         RatingControl($rating, systemImageName: "star", filledSymbolVariant: .fill)
-//            .iconSpacing(0)
+//            .ratingControlIconSpacing(0)
         //    RatingView(rating: .constant(3), maximumRating: 5, stackSpacing: nil) {
         //        Image(systemName: "star")
         //    } filledIcon: {

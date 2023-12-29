@@ -9,7 +9,7 @@ import Foundation
 
 /// What method to use when laying out each icon in the control.
 ///
-/// This can be set using ``RatingControl/RatingControl/controlSizingMode(_:)``. It defaults to ``useEmptyIconSize``.
+/// This can be set using ``SwiftUI/View/ratingControlIconFrameSizingMode(_:)``. It defaults to ``useEmptyIconSize``.
 public enum RatingControlIconFrameSizingMode: Sendable {
     /// This mode sets the frame size to that of the control's empty icon.
     case useEmptyIconSize
