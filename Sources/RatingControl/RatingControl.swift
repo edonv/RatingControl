@@ -230,23 +230,19 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
     }
 }
 
-@available(iOS 15, macOS 12, macCatalyst 15, tvOS 15, watchOS 8, visionOS 1, *)
+@available(iOS 16, macOS 12, macCatalyst 15, tvOS 15, watchOS 8, visionOS 1, *)
 private struct RatingViewPreview: View {
     @State private var rating: Int = 0
     
     var body: some View {
-        RatingControl($rating, systemImageName: "star", filledSymbolVariant: .fill)
+        RatingControl($rating, systemImageName: "star", filledSymbolVariant: .fill.circle)
 //            .ratingControlIconSpacing(0)
-        //    RatingView(rating: .constant(3), maximumRating: 5, stackSpacing: nil) {
-        //        Image(systemName: "star")
-        //    } filledIcon: {
-        //        Image(systemName: "star")
-        //            .symbolVariant(.fill)
-        //    }
+            .ratingControlIconStyle(.blue.gradient)
+//            .ratingControlIconFrameSizingMode(.dynamic)
     }
 }
 
-@available(iOS 15, macOS 12, macCatalyst 15, tvOS 15, watchOS 8, visionOS 1, *)
+@available(iOS 16, macOS 12, macCatalyst 15, tvOS 15, watchOS 8, visionOS 1, *)
 #Preview {
     RatingViewPreview()
         .font(.largeTitle)
