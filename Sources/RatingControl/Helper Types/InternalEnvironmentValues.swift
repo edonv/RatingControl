@@ -52,3 +52,50 @@ extension View {
         self.environment(\.ratingControlIconFrameSizingMode, mode)
     }
 }
+
+// MARK: EmptyIconColor
+
+private struct RatingControlEmptyIconColorEnvironmentKey: EnvironmentKey {
+    static let defaultValue: Color = .primary
+}
+
+extension EnvironmentValues {
+    internal var ratingControlEmptyIconColor: Color {
+        get { self[RatingControlEmptyIconColorEnvironmentKey.self] }
+        set { self[RatingControlEmptyIconColorEnvironmentKey.self] = newValue }
+    }
+}
+
+extension View {
+    /// This sets the foreground color for empty icons in a ``RatingControl/RatingControl``.
+    ///
+    /// The default value is [`primary`](https://developer.apple.com/documentation/swiftui/color/primary).
+    @ViewBuilder
+    public func ratingControlEmptyIconColor(_ color: Color) -> some View {
+        self.environment(\.ratingControlEmptyIconColor, color)
+    }
+}
+
+// MARK: FilledIconColor
+
+private struct RatingControlFilledIconColorEnvironmentKey: EnvironmentKey {
+    static let defaultValue: Color = .primary
+}
+
+extension EnvironmentValues {
+    internal var ratingControlFilledIconColor: Color {
+        get { self[RatingControlFilledIconColorEnvironmentKey.self] }
+        set { self[RatingControlFilledIconColorEnvironmentKey.self] = newValue }
+    }
+}
+
+extension View {
+    /// This sets the foreground color for filled icons in a ``RatingControl/RatingControl``.
+    ///
+    /// The default value is [`primary`](https://developer.apple.com/documentation/swiftui/color/primary).
+    @ViewBuilder
+    public func ratingControlFilledIconColor(_ color: Color) -> some View {
+        self.environment(\.ratingControlFilledIconColor, color)
+    }
+}
+

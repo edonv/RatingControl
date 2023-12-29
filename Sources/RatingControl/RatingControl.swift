@@ -23,6 +23,10 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     private var iconFrameSizingMode
     @Environment(\.ratingControlIconSpacing)
     private var iconSpacing
+    @Environment(\.ratingControlEmptyIconColor)
+    private var emptyIconColor
+    @Environment(\.ratingControlFilledIconColor)
+    private var filledIconColor
     
     private let axis: Axis
     private let maximumRating: Int
@@ -149,25 +153,31 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
         switch iconFrameSizingMode {
         case .useEmptyIconSize:
             emptyIcon()
+                .foregroundColor(emptyIconColor)
                 .opacity(number > rating ? 1 : 0)
                 .overlayBackport {
                     finalFilledIcon
+                        .foregroundColor(filledIconColor)
                         .opacity(number > rating ? 0 : 1)
                 }
             
         case .useFilledIconSize:
             finalFilledIcon
+                .foregroundColor(filledIconColor)
                 .opacity(number > rating ? 0 : 1)
                 .overlayBackport {
                     emptyIcon()
+                        .foregroundColor(emptyIconColor)
                         .opacity(number > rating ? 1 : 0)
                 }
             
         case .dynamic:
             if number > rating {
                 emptyIcon()
+                    .foregroundColor(emptyIconColor)
             } else {
                 finalFilledIcon
+                    .foregroundColor(filledIconColor)
             }
         }
     }
