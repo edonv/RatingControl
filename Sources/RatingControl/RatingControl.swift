@@ -21,7 +21,6 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     
     @Environment(\.ratingControlIconFrameSizingMode)
     private var iconFrameSizingMode
-    
     @Environment(\.ratingControlIconSpacing)
     private var iconSpacing
     
