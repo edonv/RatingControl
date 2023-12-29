@@ -16,7 +16,7 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     private var layoutDirection
     
     @Environment(\.ratingControlIconFrameSizingMode)
-    private var controlSizingMode
+    private var iconFrameSizingMode
     
     @Environment(\.ratingControlIconSpacing)
     private var iconSpacing
@@ -143,7 +143,7 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     
     @ViewBuilder
     private func label(for number: Int) -> some View {
-        switch controlSizingMode {
+        switch iconFrameSizingMode {
         case .useEmptyIconSize:
             emptyIcon()
                 .opacity(number > rating ? 1 : 0)
