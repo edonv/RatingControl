@@ -157,38 +157,42 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     private func label(for number: Int) -> some View {
         switch iconFrameSizingMode {
         case .useEmptyIconSize:
-            emptyIcon()
-                .foregroundStyleBackport(emptyIconStyle)
-                .opacity(number > rating ? 1 : 0)
+            styledEmptyIcon(for: number)
                 .overlayBackport {
-                    finalFilledIcon
-                        .foregroundStyleBackport(filledIconStyle)
-                        .opacity(number > rating ? 0 : 1)
+                    styledFilledIcon(for: number)
                 }
             
         case .useFilledIconSize:
-            finalFilledIcon
-                .foregroundStyleBackport(filledIconStyle)
-                .opacity(number > rating ? 0 : 1)
+            styledFilledIcon(for: number)
                 .overlayBackport {
-                    emptyIcon()
-                        .foregroundStyleBackport(emptyIconStyle)
-                        .opacity(number > rating ? 1 : 0)
+                    styledEmptyIcon(for: number)
                 }
             
         case .dynamic:
             if number > rating {
-                emptyIcon()
-                    .foregroundStyleBackport(emptyIconStyle)
+                styledEmptyIcon(for: number)
             } else {
-                finalFilledIcon
-                    .foregroundStyleBackport(filledIconStyle)
+                styledFilledIcon(for: number)
             }
         }
     }
     
     @ViewBuilder
-    private var finalFilledIcon: some View {
+    private func styledEmptyIcon(for number: Int) -> some View {
+        emptyIcon()
+            .foregroundStyleBackport(emptyIconStyle)
+            .opacity(number > rating ? 1 : 0)
+    }
+    
+    @ViewBuilder
+    private func styledFilledIcon(for number: Int) -> some View {
+        filledIconWithVariant
+            .foregroundStyleBackport(filledIconStyle)
+            .opacity(number > rating ? 0 : 1)
+    }
+    
+    @ViewBuilder
+    private var filledIconWithVariant: some View {
         if #available(iOS 15.0, macOS 12.0, macCatalyst 15.0, tvOS 15.0, watchOS 8.0, *) {
             filledIcon()
                 .symbolVariant(filledSymbolVariant.symbolVariants)
