@@ -58,12 +58,12 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     ) {
         self.axis = axis
         // Ensure it's not set to anything less than 1
-        self.maximumRating = max(Double(maximumRating), 1)
+        self.maximumRating = Double(maximumRating).clamped(to: 1...)
         
         self._rating = .init {
-            Double(min(max(rating.wrappedValue, 0), maximumRating))
+            Double(rating.wrappedValue.clamped(to: 0...maximumRating))
         } set: { newValue in
-            rating.wrappedValue = min(max(V(newValue), 0), V(maximumRating))
+            rating.wrappedValue = V(newValue).clamped(to: 0...maximumRating)
         }
         
         self.emptyIcon = emptyIcon
@@ -130,7 +130,7 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
                     positionValue = frameDimension - positionValue
                 }
                 
-                let clampedPosValue = min(max(positionValue, 0), frameDimension)
+                let clampedPosValue = positionValue.clamped(to: 0...frameDimension)
                 let newValue = (CGFloat(maximumRating) * clampedPosValue / frameDimension)/*.rounded(.up)*/
                 
                 if rating != Double(newValue) {
