@@ -230,7 +230,7 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
     }
 }
 
-@available(iOS 16, macOS 12, macCatalyst 15, tvOS 15, watchOS 8, visionOS 1, *)
+@available(iOS 16, macOS 13, macCatalyst 16, tvOS 16, watchOS 9, visionOS 1, *)
 private struct RatingViewPreview: View {
     @State private var rating: Int = 0
     
@@ -242,7 +242,7 @@ private struct RatingViewPreview: View {
     }
 }
 
-@available(iOS 16, macOS 12, macCatalyst 15, tvOS 15, watchOS 8, visionOS 1, *)
+@available(iOS 16, macOS 13, macCatalyst 16, tvOS 16, watchOS 9, visionOS 1, *)
 #Preview {
     RatingViewPreview()
         .font(.largeTitle)
