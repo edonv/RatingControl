@@ -237,7 +237,9 @@ private struct RatingViewPreview: View {
     var body: some View {
         RatingControl($rating, systemImageName: "star", filledSymbolVariant: .fill.circle)
 //            .ratingControlIconSpacing(0)
-            .ratingControlIconStyle(.blue.gradient)
+//            .ratingControlIconColor(.blue.gradient)
+            .ratingControlEmptyIconStyle(.blue.gradient)
+            .ratingControlFilledIconStyle(.orange.gradient)
 //            .ratingControlIconFrameSizingMode(.dynamic)
     }
 }
