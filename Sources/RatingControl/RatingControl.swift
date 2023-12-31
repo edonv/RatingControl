@@ -80,19 +80,11 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
                 #if !os(tvOS)
                 label(for: n)
                     .onTapGesture {
-                        if n == 1 && rating == 1 {
-                            rating = 0
-                        } else {
-                            rating = n
-                        }
+                        tappedIcon(n)
                     }
                 #else
                 Button {
-                    if n == 1 && rating == 1 {
-                        rating = 0
-                    } else {
-                        rating = n
-                    }
+                    tappedIcon(n)
                 } label: {
                     label(for: n)
                 }
@@ -142,6 +134,14 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
             }
     }
     #endif
+    
+    private func tappedIcon(_ number: Double) {
+        if number == 1 && rating == 1 {
+            rating = 0
+        } else {
+            rating = number
+        }
+    }
     
     @ViewBuilder
     private func stack(@ViewBuilder content: () -> some View) -> some View {
