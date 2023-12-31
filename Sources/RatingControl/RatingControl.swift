@@ -71,7 +71,11 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     }
     
     private var iterationStride: Array<Double> {
-        Array(stride(from: 1, through: maximumRating, by: 1))
+        let start = Array(stride(from: 1, through: maximumRating, by: 1))
+        
+        // Continue if max is not a whole number
+        guard !maximumRating.isWholeNumber else { return start }
+        return start + CollectionOfOne(maximumRating)
     }
     
     public var body: some View {
