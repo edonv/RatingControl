@@ -83,6 +83,20 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
             ForEach(iterationStride, id: \.self) { n in
                 #if !os(tvOS)
                 label(for: n)
+                    .backgroundBackport {
+                        GeometryReader { reader in
+                            Color.clear
+                                .preference(key: IconStackFullSizePreferenceKey.self, value: IconStackFullSizePreferenceKey.value(for: axis, in: reader))
+                                .anchorPreference(key: IconStackSummingSizesPreferenceKey.self, value: .bounds) { anchor in
+                                    switch axis {
+                                    case .horizontal:
+                                        reader[anchor].width
+                                    case .vertical:
+                                        reader[anchor].height
+                                    }
+                                }
+                        }
+                    }
                     .onTapGesture {
                         tappedIcon(n)
                     }
@@ -97,13 +111,12 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
             }
         }
         #if !os(tvOS)
-        .backgroundBackport {
-            GeometryReader { reader in
-                Color.clear
-                    .onChangeBackport(of: reader.size) { newValue in
-                        frameSize = newValue
-                    }
-            }
+        .coordinateSpace(name: "fullControl")
+        .onPreferenceChange(IconStackSummingSizesPreferenceKey.self) { newSize in
+            totalAxisSizeAllIcons = newSize
+        }
+        .onPreferenceChange(IconStackFullSizePreferenceKey.self) { newSize in
+            fullFrameMainDimension = newSize
         }
         .gesture(drag)
         #endif
@@ -111,6 +124,8 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     
     #if !os(tvOS)
     @State private var frameSize: CGSize = .zero
+    @State private var totalAxisSizeAllIcons: CGFloat = 0
+    @State private var fullFrameMainDimension: CGFloat = 0
     private var drag: some Gesture {
         DragGesture(minimumDistance: 0)
             .onChanged { value in
