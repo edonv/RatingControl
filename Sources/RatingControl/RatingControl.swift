@@ -123,32 +123,14 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     }
     
     #if !os(tvOS)
-    @State private var frameSize: CGSize = .zero
     @State private var totalAxisSizeAllIcons: CGFloat = 0
     @State private var fullFrameMainDimension: CGFloat = 0
     private var drag: some Gesture {
         DragGesture(minimumDistance: 0)
             .onChanged { value in
-                var positionValue: CGFloat
-                let frameDimension: CGFloat
-                switch axis {
-                case .horizontal:
-                    positionValue = value.location.x
-                    frameDimension = frameSize.width
-                case .vertical:
-                    positionValue = value.location.y
-                    frameDimension = frameSize.height
-                }
-                
-                if layoutDirection == .rightToLeft {
-                    positionValue = frameDimension - positionValue
-                }
-                
-                let clampedPosValue = positionValue.clamped(to: 0...frameDimension)
-                let newValue = (CGFloat(maximumRating) * clampedPosValue / frameDimension)/*.rounded(.up)*/
-                
-                if rating != Double(newValue) {
-                    rating = Double(newValue)
+                let newRating = calcRating(from: value.location)
+                if rating != newRating {
+                    rating = newRating
                 }
             }
     }
@@ -160,6 +142,47 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
         } else {
             rating = number
         }
+    }
+    
+    private func calcRating(from touchPosition: CGPoint) -> Double {
+        var positionValue: CGFloat
+        switch axis {
+        case .horizontal:
+            positionValue = touchPosition.x
+        case .vertical:
+            positionValue = touchPosition.y
+        }
+        
+        if layoutDirection == .rightToLeft {
+            positionValue = fullFrameMainDimension - positionValue
+        }
+        
+        // If positionValue is at min or max allowed value, return the respective bound.
+        // As opposed to clamping, it's better to just return so no more math is done
+        guard positionValue > 0 else { return 0 }
+        guard positionValue < fullFrameMainDimension else { return maximumRating }
+        
+        // Calc spacing by gettin difference between full size of control and sum of sizes of icons
+        let spacing = (fullFrameMainDimension - totalAxisSizeAllIcons) / CGFloat(maximumRating - 1)
+        // This won't work with `.dynamic` mode. Instead, refactor IconStackSummingSizesPreferenceKey to use a custom struct that is a dictionary or array storing the sizes of each icon
+        let iconDimension = totalAxisSizeAllIcons / maximumRating.rounded(.up)
+        
+        // incremently remove spacing and icon width from clampedPosValue until less than iconWidth
+        var posValueLocal = positionValue
+        var selectedIconNum = 0.0
+        while posValueLocal >= iconDimension {
+            posValueLocal -= (spacing + iconDimension)
+            selectedIconNum += 1
+        }
+        
+        // If local position is between -spacing and `0`, then touch position is in a spacing gap between icons,
+        // so just return the selected number icon
+        guard !(-spacing..<0).contains(posValueLocal) else { return selectedIconNum }
+        
+        // Calc final value by dividing the local space posValue by iconWidth, then adding selectingIconNumNew
+        // i.e. (24 / 48) + 3 = 3.5
+        return Double((posValueLocal / iconDimension) + selectedIconNum)
+            .clamped(to: 0...maximumRating)
     }
     
     @ViewBuilder
