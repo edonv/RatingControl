@@ -163,40 +163,13 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     
     @ViewBuilder
     private func label(for number: Double) -> some View {
-        switch iconFrameSizingMode {
-        case .useEmptyIconSize:
-            styledEmptyIcon(for: number)
-                .overlayBackport {
-                    styledFilledIcon(for: number)
-                }
-            
-        case .useFilledIconSize:
-            styledFilledIcon(for: number)
-                .overlayBackport {
-                    styledEmptyIcon(for: number)
-                }
-            
-        case .dynamic:
-            if number > rating {
-                styledEmptyIcon(for: number)
-            } else {
-                styledFilledIcon(for: number)
-            }
+        iconFrameSizingMode.layoutIcons(ratingValue: rating, iconNumber: number) {
+            emptyIcon()
+                .foregroundStyleBackport(emptyIconStyle)
+        } filledIcon: {
+            filledIconWithVariant
+                .foregroundStyleBackport(filledIconStyle)
         }
-    }
-    
-    @ViewBuilder
-    private func styledEmptyIcon(for number: Double) -> some View {
-        emptyIcon()
-            .foregroundStyleBackport(emptyIconStyle)
-            .opacity(number > rating ? 1 : 0)
-    }
-    
-    @ViewBuilder
-    private func styledFilledIcon(for number: Double) -> some View {
-        filledIconWithVariant
-            .foregroundStyleBackport(filledIconStyle)
-            .opacity(number > rating ? 0 : 1)
     }
     
     @ViewBuilder
