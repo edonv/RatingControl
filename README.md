@@ -14,3 +14,7 @@ While normal modifiers such as `.foregroundColor(_:)` and `.foregroundStyle(_:)`
 - [ ] Figure out how to do partial values
     - change bound value from `Int` to `Double` (use `Slider`'s initializers as reference for generic number)
     - use `.mask` modifier?
+    - make sure to take into account padding
+    - [ ] for `.dynamic` sizing mode: maybe solution is to make an actual `ViewModifier` with a @State var that reads preferencekey changes and calculates the masking scale and calc's the frame width?
+- [ ] add tvOS exclusive modifier that specifies stride/increment
+    - [ ] also maybe replace Button with some sort of custom tvOS control where just pressing left/right changes the value by the increment
