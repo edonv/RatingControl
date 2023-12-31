@@ -70,10 +70,13 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
         self.filledIcon = filledIcon
     }
     
+    private var iterationStride: Array<Double> {
+        Array(stride(from: 1, through: maximumRating, by: 1))
+    }
+    
     public var body: some View {
         stack {
-            ForEach(1...Int(maximumRating), id: \.self) { int in
-                let n = Double(int)
+            ForEach(iterationStride, id: \.self) { n in
                 #if !os(tvOS)
                 label(for: n)
                     .onTapGesture {
