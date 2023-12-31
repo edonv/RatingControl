@@ -15,8 +15,11 @@ While normal modifiers such as `.foregroundColor(_:)` and `.foregroundStyle(_:)`
     - change bound value from `Int` to `Double` (use `Slider`'s initializers as reference for generic number)
     - use `.mask` modifier?
     - make sure to take into account padding
-    - [ ] for `.dynamic` sizing mode: maybe solution is to make an actual `ViewModifier` with a @State var that reads preferencekey changes and calculates the masking scale and calc's the frame width?
-    - [ ] figure out decimal maximumValues
+    - [x] figure out decimal maximumValues
+- [ ] for `.dynamic` sizing mode: maybe solution is to make an actual `ViewModifier` with a @State var that reads preferencekey changes and calculates the masking scale and calc's the frame width?
 - [ ] add tvOS exclusive modifier that specifies stride/increment
     - [ ] also maybe replace Button with some sort of custom tvOS control where just pressing left/right changes the value by the increment
 - [ ] add tappable increment via modifier
+- [ ] add increment value to inits or environmentvalue
+    - this would affect dragging. if it's `nil`, full decimal values. otherwise, snap to values
+    - also maybe alternate initializer that takes `Binding<Int>`?
