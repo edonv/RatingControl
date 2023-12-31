@@ -34,6 +34,18 @@ extension View {
     }
     
     @ViewBuilder
+    func maskBackport<Mask>(
+        alignment: Alignment = .center,
+        @ViewBuilder _ mask: () -> Mask
+    ) -> some View where Mask: View {
+        if #available(iOS 15.0, macOS 12.0, macCatalyst 15.0, tvOS 15, watchOS 8.0, visionOS 1.0, *) {
+            self.mask(alignment: alignment, mask)
+        } else {
+            self.mask(mask())
+        }
+    }
+    
+    @ViewBuilder
     func onChangeBackport<Value: Equatable>(of value: Value, perform action: @escaping (Value) -> Void) -> some View {
         self.onReceive(Just(value).removeDuplicates()) { newValue in
             action(newValue)
