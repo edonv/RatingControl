@@ -16,5 +16,5 @@ public enum RatingControlIconFrameSizingMode: Sendable {
     /// This mode sets the frame size to that of the control's filled icon.
     case useFilledIconSize
     /// This mode leaves each icon state to resize automatically, even if that means the overall frame of the control could move as it changes.
-    case dynamic
+//    case dynamic
 }
