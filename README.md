@@ -11,7 +11,7 @@ While normal modifiers such as `.foregroundColor(_:)` and `.foregroundStyle(_:)`
 
 ## To-Do's
 
-- [ ] Figure out how to do partial values
+- [x] Figure out how to do partial values
     - change bound value from `Int` to `Double` (use `Slider`'s initializers as reference for generic number)
     - use `.mask` modifier?
     - make sure to take into account padding
