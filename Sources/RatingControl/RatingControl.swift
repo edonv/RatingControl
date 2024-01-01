@@ -72,6 +72,7 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
         // Ensure it's not set to anything less than 1
         self.maximumRating = Double(maximumRating).clamped(to: 1...)
         
+        // Rating shouldn't be negative
         self._rating = .init {
             Double(rating.wrappedValue.clamped(to: 0...maximumRating))
         } set: { newValue in
