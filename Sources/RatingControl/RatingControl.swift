@@ -59,6 +59,7 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     ///   - maximumRating: The maximum possible value. This is how many icons will be laid out.
     ///   - emptyIcon: A view used for every number increment past the current `rating` value, used to show the possible range of values.
     ///   - filledIcon: A view used for every number increment up to the current `rating` value, used to show the current value.
+    @available(iOS 13, macOS 10.15, macCatalyst 13, tvOS 13.0, watchOS 6, visionOS 1, *)
     public init<V: BinaryFloatingPoint>(
         _ rating: Binding<V>,
         axis: Axis = .horizontal,
