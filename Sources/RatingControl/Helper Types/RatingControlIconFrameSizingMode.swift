@@ -23,6 +23,7 @@ public enum RatingControlIconFrameSizingMode: Sendable {
     internal func layoutIcons<EmptyIcon: View, FilledIcon: View>(
         ratingValue: Double,
         iconNumber: Double,
+        axis: Axis,
         @ViewBuilder emptyIcon: @escaping () -> EmptyIcon,
         @ViewBuilder filledIcon: @escaping () -> FilledIcon
     ) -> some View {
@@ -48,15 +49,25 @@ public enum RatingControlIconFrameSizingMode: Sendable {
         let showFilledIcon = clampedValue > -1
         
         // Calc the scale of each icon's mask
+        // And use these values in CGSize's based on axis
+        
         // If filledIcon is being shown, then set a calc'd ratio.
         // Otherwise, it doesn't matter, because it's hidden.
         let emptyMaskScale = showFilledIcon ? (1 - clampedValue - 1) : 1
+        let emptyMaskScaleSize = axis == .horizontal ? CGSize(width: emptyMaskScale, height: 1) : CGSize(width: 1, height: emptyMaskScale)
+        
         // If emptyIcon is being shown, then set a calc'd ratio.
         // Otherwise, it doesn't matter, because it's hidden.
         let filledMaskScale = showEmptyIcon ? (clampedValue + 1) : 1
+        let filledMaskScaleSize = axis == .horizontal ? CGSize(width: filledMaskScale, height: 1) : CGSize(width: 1, height: filledMaskScale)
         
         // Calculate if empty icon should be cut off if not a whole number
         let emptyIconWholeNumberMaskScale = iconNumber.isWholeNumber ? 1 : iconNumber.truncatingRemainder(dividingBy: 1)
+        let emptyIconWholeNumberMaskScaleSize = axis == .horizontal ? CGSize(width: emptyIconWholeNumberMaskScale, height: 1) : CGSize(width: 1, height: emptyIconWholeNumberMaskScale)
+        
+        // Check what anchors should be used based on axis
+        let startUnitPoint: UnitPoint = axis == .horizontal ? .leading : .top
+        let endUnitPoint: UnitPoint = axis == .horizontal ? .trailing : .bottom
         
         // Layout
         switch self {
@@ -64,11 +75,11 @@ public enum RatingControlIconFrameSizingMode: Sendable {
             emptyIcon()
                 .maskBackport {
                     Rectangle()
-                        .scale(x: emptyIconWholeNumberMaskScale, anchor: .leading)
+                        .scale(emptyIconWholeNumberMaskScaleSize, anchor: startUnitPoint)
                 }
                 .maskBackport {
                     Rectangle()
-                        .scale(x: emptyMaskScale, anchor: .trailing)
+                        .scale(emptyMaskScaleSize, anchor: endUnitPoint)
                 }
                 .opacity(showEmptyIcon ? 1 : 0)
                 .overlayBackport {
@@ -78,7 +89,7 @@ public enum RatingControlIconFrameSizingMode: Sendable {
                         }
                         .maskBackport {
                             Rectangle()
-                                .scale(x: filledMaskScale, anchor: .leading)
+                                .scale(filledMaskScaleSize, anchor: startUnitPoint)
                         }
                         .opacity(showFilledIcon ? 1 : 0)
                 }
@@ -87,7 +98,7 @@ public enum RatingControlIconFrameSizingMode: Sendable {
             filledIcon()
                 .maskBackport {
                     Rectangle()
-                        .scale(x: filledMaskScale, anchor: .leading)
+                        .scale(filledMaskScaleSize, anchor: startUnitPoint)
                 }
                 .opacity(showFilledIcon ? 1 : 0)
                 .overlayBackport {
@@ -97,11 +108,11 @@ public enum RatingControlIconFrameSizingMode: Sendable {
                         }
                         .maskBackport {
                             Rectangle()
-                                .scale(x: emptyIconWholeNumberMaskScale, anchor: .leading)
+                                .scale(emptyIconWholeNumberMaskScaleSize, anchor: startUnitPoint)
                         }
                         .maskBackport {
                             Rectangle()
-                                .scale(x: emptyMaskScale, anchor: .trailing)
+                                .scale(emptyMaskScaleSize, anchor: endUnitPoint)
                         }
                         .opacity(showEmptyIcon ? 1 : 0)
                 }
@@ -112,7 +123,7 @@ public enum RatingControlIconFrameSizingMode: Sendable {
 //                    filledIcon()
 //                        .maskBackport {
 //                            Rectangle()
-//                                .scale(x: filledMaskScale, anchor: .leading)
+//                                .scale(filledMaskScaleSize, anchor: startUnitPoint)
 //                        }
 //                }
 //                
@@ -120,7 +131,7 @@ public enum RatingControlIconFrameSizingMode: Sendable {
 //                    emptyIcon()
 //                        .maskBackport {
 //                            Rectangle()
-//                                .scale(x: emptyMaskScale, anchor: .trailing)
+//                                .scale(emptyMaskScaleSize, anchor: endUnitPoint)
 //                        }
 //                }
 //            }

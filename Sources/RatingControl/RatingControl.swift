@@ -202,7 +202,7 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     
     @ViewBuilder
     private func label(for number: Double) -> some View {
-        iconFrameSizingMode.layoutIcons(ratingValue: rating, iconNumber: number) {
+        iconFrameSizingMode.layoutIcons(ratingValue: roundedRating, iconNumber: number, axis: axis) {
             emptyIcon()
                 .foregroundStyleBackport(emptyIconStyle)
         } filledIcon: {
