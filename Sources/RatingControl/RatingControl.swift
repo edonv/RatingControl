@@ -221,6 +221,8 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     }
 }
 
+// MARK: - Init with Symbol + Variant
+
 extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
     /// Creates a `RatingControl` with a system symbol image as the base icon, while applying the provided [`SymbolVariants`](https://developer.apple.com/documentation/swiftui/symbolvariants) when an icon is filled.
     ///
