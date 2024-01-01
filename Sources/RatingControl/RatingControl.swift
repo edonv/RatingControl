@@ -68,6 +68,7 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
         @ViewBuilder filledIcon: @escaping () -> FilledIcon
     ) {
         self.axis = axis
+        
         // Ensure it's not set to anything less than 1
         self.maximumRating = Double(maximumRating).clamped(to: 1...)
         
