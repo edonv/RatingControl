@@ -21,6 +21,8 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     
     @Environment(\.ratingControlIconFrameSizingMode)
     private var iconFrameSizingMode
+    @Environment(\.ratingControlStepIncrement)
+    private var stepIncrement
     @Environment(\.ratingControlIconSpacing)
     private var iconSpacing
     @Environment(\.ratingControlEmptyIconStyle)
@@ -37,6 +39,14 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
     // MARK: Binding/ViewBuilder Properties
     
     @Binding private var rating: Double
+    private var roundedRating: Double {
+        if let valueStep = stepIncrement.wrappedValue {
+            rating.rounded(upToMultiple: valueStep)
+        } else {
+            rating
+        }
+    }
+    
     @ViewBuilder
     private var emptyIcon: () -> EmptyIcon
     @ViewBuilder
