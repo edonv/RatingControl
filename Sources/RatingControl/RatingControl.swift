@@ -176,7 +176,8 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
         
         // If local position is between -spacing and `0`, then touch position is in a spacing gap between icons,
         // so just return the selected number icon
-        guard !(-spacing..<0).contains(posValueLocal) else { return selectedIconNum }
+        // In case `spacing` is somehow a negative number, get maginitude first
+        guard !(-(spacing.magnitude)..<0).contains(posValueLocal) else { return selectedIconNum }
         
         // Calc final value by dividing the local space posValue by iconWidth, then adding selectingIconNumNew
         // i.e. (24 / 48) + 3 = 3.5
