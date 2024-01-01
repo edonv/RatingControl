@@ -257,7 +257,9 @@ private struct RatingViewPreview: View {
     @State private var rating: Double = 0
     
     var body: some View {
-        RatingControl($rating, systemImageName: "star", filledSymbolVariant: .fill.circle)
+        RatingControl($rating,
+                      systemImageName: "star",
+                      filledSymbolVariant: .fill.circle)
 //            .ratingControlIconSpacing(0)
 //            .ratingControlIconColor(.blue.gradient)
             .ratingControlEmptyIconStyle(.blue.gradient)
