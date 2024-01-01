@@ -156,3 +156,26 @@ extension View {
             .environment(\.ratingControlFilledIconStyle, AnyShapeStyleBackport.color(color))
     }
 }
+
+// MARK: Increment
+
+private struct RatingControlStepIncrementEnvironmentKey: EnvironmentKey {
+    static let defaultValue: Binding<Double?> = .constant(nil)
+}
+
+extension EnvironmentValues {
+    internal var ratingControlStepIncrement: Binding<Double?> {
+        get { self[RatingControlStepIncrementEnvironmentKey.self] }
+        set { self[RatingControlStepIncrementEnvironmentKey.self] = newValue }
+    }
+}
+
+extension View {
+    /// Sets the distance between the valid values in a ``RatingControl/RatingControl``.
+    ///
+    /// The default value is `nil`, which will allow all decimal values between each whole number.
+    @ViewBuilder
+    public func ratingControlStepIncrement(_ step: Double?) -> some View {
+        self.environment(\.ratingControlStepIncrement, .constant(step))
+    }
+}
