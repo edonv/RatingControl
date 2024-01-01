@@ -232,7 +232,7 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
     ///   - systemImageName: The name of the system symbol image to use for every number increment past the current `rating` value, used to show the possible range of values. It's also used as the for the filled icon, but with `filledSymbolVariant` applied to it.
     ///   - filledSymbolVariant: The variant to use for the filled icon. The filled icon is used for every number increment up to the current `rating` value, used to show the current value.
     @available(iOS 15, macOS 12, macCatalyst 15, tvOS 15, watchOS 8, visionOS 1, *)
-    init<V: BinaryFloatingPoint>(
+    public init<V: BinaryFloatingPoint>(
         _ rating: Binding<V>,
         axis: Axis = .horizontal,
         maximumRating: V = 5,
