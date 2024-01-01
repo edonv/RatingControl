@@ -16,7 +16,7 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
     ///   - emptySystemImageName: The name of the system symbol image to use for every number increment past the current `rating` value, used to show the possible range of values.
     ///   - filledSystemImageName: The name of the system symbol image to use for every number increment up to the current `rating` value, used to show the current value.
     @available(iOS 13, macOS 11, macCatalyst 13, tvOS 13.0, watchOS 6, visionOS 1, *)
-    init<V: BinaryFloatingPoint>(
+    public init<V: BinaryFloatingPoint>(
         _ rating: Binding<V>,
         axis: Axis = .horizontal,
         maximumRating: V = 5,
@@ -38,7 +38,7 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
     ///   - emptyImageName: The name of the image resource to use for every number increment past the current `rating` value, used to show the possible range of values.
     ///   - filledImageName: The name of the image resource to use for every number increment up to the current `rating` value, used to show the current value.
     @available(iOS 13, macOS 10.15, macCatalyst 13, tvOS 13.0, watchOS 6, visionOS 1, *)
-    init<V: BinaryFloatingPoint>(
+    public init<V: BinaryFloatingPoint>(
         _ rating: Binding<V>,
         axis: Axis = .horizontal,
         maximumRating: V = 5,
@@ -60,7 +60,7 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
     ///   - emptyImageName: The name of the image resource to use for every number increment past the current `rating` value, used to show the possible range of values.
     ///   - filledSystemImageName: The name of the system symbol image to use for every number increment up to the current `rating` value, used to show the current value.
     @available(iOS 13, macOS 11, macCatalyst 13, tvOS 13.0, watchOS 6, visionOS 1, *)
-    init<V: BinaryFloatingPoint>(
+    public init<V: BinaryFloatingPoint>(
         _ rating: Binding<V>,
         axis: Axis = .horizontal,
         maximumRating: V = 5,
@@ -82,7 +82,7 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
     ///   - emptySystemImageName: The name of the system symbol image to use for every number increment past the current `rating` value, used to show the possible range of values.
     ///   - filledImageName: The name of the image resource to use for every number increment up to the current `rating` value, used to show the current value.
     @available(iOS 13, macOS 11, macCatalyst 13, tvOS 13.0, watchOS 6, visionOS 1, *)
-    init<V: BinaryFloatingPoint>(
+    public init<V: BinaryFloatingPoint>(
         _ rating: Binding<V>,
         axis: Axis = .horizontal,
         maximumRating: V = 5,
