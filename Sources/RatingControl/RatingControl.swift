@@ -122,6 +122,14 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
         #endif
     }
     
+    private func tappedIcon(_ number: Double) {
+        if number == 1 && rating == 1 {
+            rating = 0
+        } else {
+            rating = number
+        }
+    }
+    
     #if !os(tvOS)
     @State private var totalAxisSizeAllIcons: CGFloat = 0
     @State private var fullFrameMainDimension: CGFloat = 0
@@ -133,15 +141,6 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
                     rating = newRating
                 }
             }
-    }
-    #endif
-    
-    private func tappedIcon(_ number: Double) {
-        if number == 1 && rating == 1 {
-            rating = 0
-        } else {
-            rating = number
-        }
     }
     
     private func calcRating(from touchPosition: CGPoint) -> Double {
@@ -184,6 +183,7 @@ public struct RatingControl<EmptyIcon: View, FilledIcon: View>: View {
         return Double((posValueLocal / iconDimension) + selectedIconNum)
             .clamped(to: 0...maximumRating)
     }
+    #endif
     
     @ViewBuilder
     private func stack(@ViewBuilder content: () -> some View) -> some View {
