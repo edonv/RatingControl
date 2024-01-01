@@ -258,6 +258,7 @@ private struct RatingViewPreview: View {
     
     var body: some View {
         RatingControl($rating,
+                      axis: .horizontal,
                       systemImageName: "star",
                       filledSymbolVariant: .fill.circle)
 //            .ratingControlIconSpacing(0)
