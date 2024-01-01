@@ -8,6 +8,8 @@
 import SwiftUI
 
 extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
+    // MARK: - Init with Empty Symbol/Filled Symbol
+    
     /// Creates a `RatingControl` with a system symbol image as the empty icon and another as the filled icon.
     /// - Parameters:
     ///   - rating: The binding to a value you provide.
@@ -29,6 +31,8 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
             Image(systemName: filledSystemImageName)
         }
     }
+    
+    // MARK: - Init with Empty Image/Filled Image
     
     /// Creates a `RatingControl` with an image resource as the empty icon and another as the filled icon.
     /// - Parameters:
@@ -52,6 +56,8 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
         }
     }
     
+    // MARK: - Init with Empty Image/Filled Symbol
+    
     /// Creates a `RatingControl` with an image resource as the empty icon and a system symbol image as the filled icon.
     /// - Parameters:
     ///   - rating: The binding to a value you provide.
@@ -73,6 +79,8 @@ extension RatingControl where EmptyIcon == Image, FilledIcon == Image {
             Image(systemName: filledSystemImageName)
         }
     }
+    
+    // MARK: - Init with Empty Symbol/Filled Image
     
     /// Creates a `RatingControl` with a system symbol image as the empty icon and an image resource as the filled icon.
     /// - Parameters:
